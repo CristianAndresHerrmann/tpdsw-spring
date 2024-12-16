@@ -28,7 +28,6 @@ import lombok.experimental.SuperBuilder;
 public class Plato extends ItemMenu {
 
     @Column(nullable = false)
-    @Min(0)
     private Double calorias;
 
     @Column(nullable = false)

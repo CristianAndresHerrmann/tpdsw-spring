@@ -1,37 +1,54 @@
 package com.mycompany.tpdsw.service;
 
 import java.util.List;
-import java.util.Optional;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import com.mycompany.tpdsw.exception.ClienteNoEncontradoException;
 import com.mycompany.tpdsw.model.Cliente;
+import com.mycompany.tpdsw.repository.ClienteRepository;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
+    @Autowired
+    private ClienteRepository clienteRepository;
+
     @Override
     public List<Cliente> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        return clienteRepository.findAll();
     }
 
     @Override
-    public Optional<Cliente> findById(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
-    }
+    public Cliente findById(Integer id) throws ClienteNoEncontradoException {
+            Cliente cliente = clienteRepository.findById(id)
+                    .orElseThrow(() -> new ClienteNoEncontradoException("Cliente "+ id + " no encontrado"));
+            return cliente;
 
+    }
     @Override
     public void save(Cliente cliente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+        clienteRepository.save(cliente);
+    }
+    @Override
+    public Cliente update(Integer id, Cliente cliente) throws ClienteNoEncontradoException {
+            return clienteRepository.findById(id)
+                    .map(clienteEncontrado -> {
+                        clienteEncontrado.setNombre(cliente.getNombre());
+                        clienteEncontrado.setEmail(cliente.getEmail());
+                        clienteEncontrado.setDireccion(cliente.getDireccion());
+                        return clienteRepository.save(clienteEncontrado);
+                    })
+                    .orElseThrow(() -> new ClienteNoEncontradoException("Cliente "+ id + " no encontrado"));
+        
     }
 
     @Override
-    public void delete(Cliente cliente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    public void delete(Cliente cliente) throws ClienteNoEncontradoException {
+        clienteRepository.delete(cliente);
     }
     
 }

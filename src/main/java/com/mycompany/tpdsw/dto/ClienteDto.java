@@ -2,11 +2,15 @@ package com.mycompany.tpdsw.dto;
 
 import com.mycompany.tpdsw.model.Coordenada;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ClienteDto {
     private Integer id;
     private String nombre;
@@ -27,27 +31,5 @@ public class ClienteDto {
     private String longitud;
     private String latitud;
     private String IdText;
-
-    // Constructor para modificar
-    public ClienteDto(String idText, String nombre, String cuit, String direccion, String email, String latitud,
-            String longitud) {
-        this.nombre = nombre;
-        this.cuit = cuit;
-        this.direccion = direccion;
-        this.email = email;
-        this.longitud = longitud;
-        this.latitud = latitud;
-        this.IdText = idText;
-    }
-
-    // Constructor para crear
-    public ClienteDto(String nombre, String cuit, String direccion, String email, String latitud, String longitud) {
-        this.nombre = nombre;
-        this.cuit = cuit;
-        this.direccion = direccion;
-        this.email = email;
-        this.longitud = longitud;
-        this.latitud = latitud;
-    }
 
 }
