@@ -1,6 +1,7 @@
 package com.mycompany.tpdsw.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.mycompany.tpdsw.dto.VendedorDto;
 import com.mycompany.tpdsw.model.Vendedor;
@@ -8,6 +9,7 @@ import com.mycompany.tpdsw.model.Vendedor;
 import lombok.Builder;
 
 @Builder
+@Component
 public class VendedorMapper implements Mapper<Vendedor, VendedorDto> {
 
     @Autowired

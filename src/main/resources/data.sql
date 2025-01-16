@@ -1,5 +1,3 @@
-USE database spring;
-
 -- Insertar datos en la tabla 'coordenadas'
 INSERT INTO coordenada (latitud, longitud) VALUES (40.7128, -74.0060);
 INSERT INTO coordenada (latitud, longitud) VALUES (34.0522, -118.2437);

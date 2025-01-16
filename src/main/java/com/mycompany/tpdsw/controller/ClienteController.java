@@ -28,64 +28,71 @@ import com.mycompany.tpdsw.service.ClienteService;
 @RequestMapping("/api/clientes")
 public class ClienteController {
 
-    @Autowired
-    private ClienteService clienteService;
-
-    @Autowired
-    private ClienteMapper clienteMapper;
-
-    @GetMapping("/findAll")
-    public ResponseEntity<?> findAll() {
-        List<Cliente> clientes = clienteService.findAll();
-        List<ClienteDto> clientesDto = clientes.stream().map(clienteMapper::mapToDto).toList();
-        return ResponseEntity.ok(clientesDto);
-    }
-
-    @GetMapping("/find/{id}")
-    public ResponseEntity<?> findById(@PathVariable Integer id) throws ClienteNoEncontradoException {
-        Cliente cliente = clienteService.findById(id);
-        if (cliente != null) {
-            ClienteDto clienteDto = clienteMapper.mapToDto(cliente);
-            return ResponseEntity.ok(clienteDto);
-        } else {
-            throw new ClienteNoEncontradoException("Cliente con ID " + id + " no encontrado.");
-        }
-    }
-
-    @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody ClienteDto clienteDto) {
-        Cliente cliente = clienteMapper.mapToModel(clienteDto);
-        Cliente clienteGuardado = clienteService.save(cliente);
-
-    }
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody ClienteDto clienteDto)
-            throws ClienteNoEncontradoException {
-        Optional<Cliente> cliente = Optional.of(clienteService.findById(id));
-        if (cliente.isPresent()) {
-            clienteService.update(id, Cliente.builder()
-                    .nombre(clienteDto.getNombre())
-                    .cuit(clienteDto.getCuit())
-                    .direccion(clienteDto.getDireccion())
-                    .email(clienteDto.getEmail())
-                    .coordenada(clienteDto.getCoordenada())
-                    .build());
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id) throws ClienteNoEncontradoException {
-        Optional<Cliente> cliente = Optional.of(clienteService.findById(id));
-        if (cliente.isPresent()) {
-            clienteService.delete(cliente.get());
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+    /*
+     * @Autowired
+     * private ClienteService clienteService;
+     * 
+     * @Autowired
+     * private ClienteMapper clienteMapper;
+     * 
+     * @GetMapping("/findAll")
+     * public ResponseEntity<?> findAll() {
+     * List<Cliente> clientes = clienteService.findAll();
+     * List<ClienteDto> clientesDto =
+     * clientes.stream().map(clienteMapper::mapToDto).toList();
+     * return ResponseEntity.ok(clientesDto);
+     * }
+     * 
+     * @GetMapping("/find/{id}")
+     * public ResponseEntity<?> findById(@PathVariable Integer id) throws
+     * ClienteNoEncontradoException {
+     * Cliente cliente = clienteService.findById(id);
+     * if (cliente != null) {
+     * ClienteDto clienteDto = clienteMapper.mapToDto(cliente);
+     * return ResponseEntity.ok(clienteDto);
+     * } else {
+     * throw new ClienteNoEncontradoException("Cliente con ID " + id +
+     * " no encontrado.");
+     * }
+     * }
+     * 
+     * @PostMapping("/save")
+     * public ResponseEntity<?> save(@RequestBody ClienteDto clienteDto) {
+     * Cliente cliente = clienteMapper.mapToModel(clienteDto);
+     * Cliente clienteGuardado = clienteService.save(cliente);
+     * 
+     * }
+     * 
+     * @PutMapping("/update/{id}")
+     * public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody
+     * ClienteDto clienteDto)
+     * throws ClienteNoEncontradoException {
+     * Optional<Cliente> cliente = Optional.of(clienteService.findById(id));
+     * if (cliente.isPresent()) {
+     * clienteService.update(id, Cliente.builder()
+     * .nombre(clienteDto.getNombre())
+     * .cuit(clienteDto.getCuit())
+     * .direccion(clienteDto.getDireccion())
+     * .email(clienteDto.getEmail())
+     * .coordenada(clienteDto.getCoordenada())
+     * .build());
+     * return ResponseEntity.ok().build();
+     * } else {
+     * return ResponseEntity.notFound().build();
+     * }
+     * }
+     * 
+     * @DeleteMapping("/delete/{id}")
+     * public ResponseEntity<?> delete(@PathVariable Integer id) throws
+     * ClienteNoEncontradoException {
+     * Optional<Cliente> cliente = Optional.of(clienteService.findById(id));
+     * if (cliente.isPresent()) {
+     * clienteService.delete(cliente.get());
+     * return ResponseEntity.ok().build();
+     * } else {
+     * return ResponseEntity.notFound().build();
+     * }
+     * }
+     */
 
 }
