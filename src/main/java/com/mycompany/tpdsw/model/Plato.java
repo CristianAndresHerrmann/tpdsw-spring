@@ -1,15 +1,11 @@
-
 package com.mycompany.tpdsw.model;
-
-import java.math.BigDecimal;
-
-import com.mycompany.tpdsw.dto.PlatoDto;
-import com.mycompany.tpdsw.model.Categoria;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,11 +19,13 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+
 @Entity
 @Table(name = "plato")
 public class Plato extends ItemMenu {
 
     @Column(nullable = false)
+    @Min(0)
     private Double calorias;
 
     @Column(nullable = false)
@@ -40,34 +38,9 @@ public class Plato extends ItemMenu {
     private Boolean aptoVegano;
 
     @Column(nullable = false)
-
+    @DecimalMin(value = "0.05", message = "El peso debe ser al menos 50g")
+    @DecimalMax(value = "10.00", message = "El peso no puede exceder 10kg")
     private Double peso;
-
-    // Constructor para modificar Plato
-    public Plato(PlatoDto platoDto, Vendedor vendedor) {
-        super(platoDto.getId(),
-                platoDto.getNombre(),
-                platoDto.getDescripcion(),
-                platoDto.getPrecio(),
-                platoDto.getCategoria(),
-                vendedor);
-        this.calorias = platoDto.getCalorias();
-        this.aptoCeliaco = platoDto.getAptoCeliaco();
-        this.aptoVegetariano = platoDto.getAptoVegetariano();
-        this.aptoVegano = platoDto.getAptoVegano();
-        this.peso = platoDto.getPeso();
-    }
-
-    public Plato(String nombre, Double calorias, Boolean aptoCeliaco, Boolean aptoVegetariano, Boolean aptoVegano,
-            Double peso, Vendedor vendedor,
-            Integer id, BigDecimal precio, String descripcion, Categoria categoria) {
-        super(id, nombre, descripcion, precio, categoria, vendedor);
-        this.calorias = calorias;
-        this.aptoCeliaco = aptoCeliaco;
-        this.aptoVegetariano = aptoVegetariano;
-        this.aptoVegano = aptoVegano;
-        this.peso = peso;
-    }
 
     /**
      * Metodo que setea si el Plato es apto vegetariano

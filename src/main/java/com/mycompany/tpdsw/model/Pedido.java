@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.tpdsw.model;
 
 import java.math.BigDecimal;
@@ -37,7 +33,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "pedido")
-public class Pedido implements Observable<Pedido> { // Pedido pedido por un cliente
+public class Pedido implements Observable<Pedido> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +49,7 @@ public class Pedido implements Observable<Pedido> { // Pedido pedido por un clie
     @ManyToOne
     private Cliente cliente;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @Builder.Default
     private Pago formaPago = null;
 
@@ -73,12 +69,16 @@ public class Pedido implements Observable<Pedido> { // Pedido pedido por un clie
         notificarObservadores();
     }
 
+    /**
+     * Devuelve una lista de items pedidos.
+     * Extrae los objetos ItemPedido de la lista de PedidoItemPedido.
+     * 
+     * @return Lista de objetos ItemPedido asociados a PedidoItemPedido
+     */
     public List<ItemPedido> getItems() {
-        List<ItemPedido> itemsPedidos = new ArrayList<>();
-        for (PedidoItemPedido pedidoItemPedido : pedidoItemPedidos) {
-            itemsPedidos.add(pedidoItemPedido.getItemPedido());
-        }
-        return itemsPedidos;
+        return pedidoItemPedidos.stream()
+                .map(PedidoItemPedido::getItemPedido)
+                .toList();
     }
 
     /**
@@ -136,6 +136,13 @@ public class Pedido implements Observable<Pedido> { // Pedido pedido por un clie
         return this;
     }
 
+    /**
+     * Agrega un nuevo item pedido al pedido actual.
+     * Crea una relación entre el pedido y el item pedido utilizando la clase
+     * PedidoItemPedido.
+     * 
+     * @param itemPedido El item que se desea agregar al pedido.
+     */
     public void agregarItemPedido(ItemPedido itemPedido) {
         PedidoItemPedido pedidoItemPedido = PedidoItemPedido.builder()
                 .pedido(this)
@@ -144,6 +151,13 @@ public class Pedido implements Observable<Pedido> { // Pedido pedido por un clie
         pedidoItemPedidos.add(pedidoItemPedido);
     }
 
+    /**
+     * Obtiene el vendedor asociado al primer item del pedido.
+     * No hay posibilidad de realizar pedidos a varios vendedores en una misma
+     * instancia.
+     * 
+     * @return El vendedor asociado al primer item del pedido, o null si no existe.
+     */
     public Vendedor obtenerVendedor() {
         if (pedidoItemPedidos != null && !pedidoItemPedidos.isEmpty()) {
             PedidoItemPedido primerItemPedido = pedidoItemPedidos.get(0);
@@ -155,6 +169,13 @@ public class Pedido implements Observable<Pedido> { // Pedido pedido por un clie
         return null;
     }
 
+    /**
+     * Calcula la cantidad total de items en el pedido.
+     * 
+     * Suma las cantidades de todos los items pedidos en el pedido actual.
+     * 
+     * @return El total de items agregados al pedido.
+     */
     public Integer cantidadItems() {
         return pedidoItemPedidos.stream()
                 .mapToInt(pedidoItem -> pedidoItem.getItemPedido().getCantidad())

@@ -2,19 +2,19 @@ package com.mycompany.tpdsw.service;
 
 import java.util.List;
 
+import com.mycompany.tpdsw.dto.ClienteDto;
 import com.mycompany.tpdsw.exception.ClienteNoEncontradoException;
-import com.mycompany.tpdsw.model.Cliente;
 
 public interface ClienteService {
-    
-    List<Cliente> findAll();
 
-    Cliente findById(Integer id) throws ClienteNoEncontradoException;
+    List<ClienteDto> findAll();
 
-    void save(Cliente cliente);
+    ClienteDto findById(Integer id) throws ClienteNoEncontradoException;
 
-    void delete(Cliente cliente) throws ClienteNoEncontradoException;
+    ClienteDto save(ClienteDto cliente);
 
-    Cliente update(Integer id, Cliente cliente) throws ClienteNoEncontradoException;
-    
+    void delete(ClienteDto cliente) throws ClienteNoEncontradoException;
+
+    ClienteDto update(ClienteDto cliente) throws ClienteNoEncontradoException;
+
 }

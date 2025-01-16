@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,6 +38,7 @@ public abstract class Pago {
     private LocalDate fechaPago = LocalDate.now();
 
     @Column(nullable = false)
+    @Min(0)
     private BigDecimal monto;
 
     public abstract BigDecimal pagar(BigDecimal monto);

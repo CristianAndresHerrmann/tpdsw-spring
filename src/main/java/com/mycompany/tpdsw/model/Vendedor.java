@@ -1,14 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.tpdsw.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.mycompany.tpdsw.dto.VendedorDto;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -62,14 +56,6 @@ public class Vendedor {
     @Column(name = "fecha_eliminacion")
     @Builder.Default
     private LocalDate fechaEliminacion = null;
-
-    public Vendedor(VendedorDto vendedorDto) {
-        this.id = vendedorDto.getId();
-        this.nombre = vendedorDto.getNombre();
-        this.direccion = vendedorDto.getDireccion();
-        this.coordenada = vendedorDto.getCoordenada();
-        activo = true;
-    }
 
     /**
      * Calculo de la distancia entre el Restaurante y el cliente

@@ -3,8 +3,6 @@ package com.mycompany.tpdsw.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.mycompany.tpdsw.model.Categoria;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,7 +13,6 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -58,17 +55,6 @@ public abstract class ItemMenu { // Items que hay en un restaurante/vendedor
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vendedor_id")
     private Vendedor vendedor;
-
-    public ItemMenu(Integer id, String nombre, String descripcion, BigDecimal precio, Categoria categoria,
-            Vendedor vendedor) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.categoria = categoria;
-        this.vendedor = vendedor;
-        this.activo = true;
-    }
 
     public abstract Double peso();
 

@@ -10,16 +10,11 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @ToString
-@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 
-public class PlatoDto extends ItemMenuDto {
+public class MercadoPagoDto extends PagoDto {
 
-    private Double calorias;
-    private Boolean aptoCeliaco;
-    private Boolean aptoVegetariano;
-    private Boolean aptoVegano;
-    private Double peso;
-
+    private String alias;
 }

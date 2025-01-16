@@ -1,48 +1,37 @@
 package com.mycompany.tpdsw.dao;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.Session;
 
 import com.mycompany.tpdsw.model.Cliente;
-import com.mycompany.tpdsw.repository.ClienteRepository;
-
+import com.mycompany.tpdsw.service.HibernateUtil;
 
 public class ClienteDao extends GenericDAO<Cliente, Integer> {
 
     public ClienteDao() {
         super(Cliente.class);
     }
-    @Autowired
-    private ClienteRepository clienteRepository;
 
-    public List<Cliente> findAll() {
-        return (List<Cliente>) clienteRepository.findAll();
-    }
+    // Delete --> Usar deleteLogico
+    // findById --> Usar findByIdAndActive
+    // finaAll --> Usar findAllActive
+    public List<Cliente> findActiveByNombre(String nombre) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM Cliente c " +
+                    "WHERE c.activo = true " +
+                    "AND c.nombre LIKE :nombre";
 
-    public Cliente findById(Integer id) {
-        return clienteRepository.findById(id).orElse(null);
-    }
+            List<Cliente> clientes = session.createQuery(hql, Cliente.class)
+                    .setParameter("nombre", "%" + nombre + "%")
+                    .getResultList();
 
-    public void save(Cliente cliente) {
-        clienteRepository.save(cliente);
-    }
+            return clientes;
 
-    public Cliente update(Integer id, Cliente cliente) {
-        return clienteRepository.findById(id)
-                .map(clienteEncontrado -> {
-                    clienteEncontrado.setNombre(cliente.getNombre());
-                    clienteEncontrado.setEmail(cliente.getEmail());
-                    clienteEncontrado.setDireccion(cliente.getDireccion());
-                    return clienteRepository.save(clienteEncontrado);
-                })
-                .orElse(null);
+        } catch (Exception e) {
+            String errorMessage = "Error al intentar recuperar los cliente con nombre: " + nombre;
+            throw new RuntimeException(errorMessage, e);
+        }
     }
-
-    public void delete(Cliente cliente) {
-        clienteRepository.delete(cliente);
-    }
-    
 
 }

@@ -6,15 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
-public class ClienteDto {
+
+public class CoordenadaDto {
+
     private Integer id;
-    private String nombre;
-    private String cuit;
-    private String direccion;
-    private String email;
-    private CoordenadaDto coordenadaDto;
+    private Double latitud;
+    private Double longitud;
 
 }

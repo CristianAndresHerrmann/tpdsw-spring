@@ -1,35 +1,19 @@
 package com.mycompany.tpdsw.dto;
 
-import com.mycompany.tpdsw.model.ItemMenu;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class ItemPedidoDto {
 
+    private Integer id;
     private Integer cantidad;
-    private ItemMenu itemMenu;
+    private ItemMenuDto itemMenuDto;
 
-    private String itemMenuText;
-
-    public String getItemMenuText() {
-        return itemMenuText;
-    }
-
-    public void setItemMenuText(String itemMenuText) {
-        this.itemMenuText = itemMenuText;
-    }
-
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public ItemMenu getItemMenu() {
-        return itemMenu;
-    }
-
-    public void setItemMenu(ItemMenu itemMenu) {
-        this.itemMenu = itemMenu;
-    }
 }
