@@ -27,7 +27,7 @@ public class ClienteServiceImpl implements ClienteService {
      * @return Lista de clientes activos.
      */
     @Override
-    public List<ClienteDto> findAll() {
+    public List<ClienteDto> findAllActive() {
         List<Cliente> clientes = clienteRepository.findAllActive();
         return clientes.stream().map(clienteMapper::mapToDto).toList();
     }
@@ -39,9 +39,11 @@ public class ClienteServiceImpl implements ClienteService {
      * @return Cliente encontrado o null si no existe.
      */
     @Override
-    public ClienteDto findById(Integer id) throws ClienteNoEncontradoException {
-        Cliente cliente = clienteRepository.findById(id)
-                .orElseThrow(() -> new ClienteNoEncontradoException("Cliente " + id + " no encontrado"));
+    public ClienteDto findByIdAndActive(Integer id) throws ClienteNoEncontradoException {
+        Cliente cliente = clienteRepository.findByIdAndActive(id);
+        if (cliente == null) {
+            throw new ClienteNoEncontradoException("Cliente " + id + " no encontrado");
+        }
         return clienteMapper.mapToDto(cliente);
 
     }

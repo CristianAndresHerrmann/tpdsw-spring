@@ -7,14 +7,14 @@ import com.mycompany.tpdsw.exception.ClienteNoEncontradoException;
 
 public interface ClienteService {
 
-    List<ClienteDto> findAll();
+    List<ClienteDto> findAllActive();
 
-    ClienteDto findById(Integer id) throws ClienteNoEncontradoException;
+    ClienteDto findByIdAndActive(Integer id) throws ClienteNoEncontradoException;
 
-    ClienteDto save(ClienteDto cliente);
+    ClienteDto save(ClienteDto clienteDto);
 
-    void delete(ClienteDto cliente) throws ClienteNoEncontradoException;
+    void delete(ClienteDto clienteDto) throws ClienteNoEncontradoException;
 
-    ClienteDto update(ClienteDto cliente) throws ClienteNoEncontradoException;
+    ClienteDto update(ClienteDto clienteDto) throws ClienteNoEncontradoException;
 
 }

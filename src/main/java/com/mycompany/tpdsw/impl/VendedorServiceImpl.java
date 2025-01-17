@@ -29,7 +29,7 @@ public class VendedorServiceImpl implements VendedorService {
      * @return Lista de vendedores activos.
      */
     @Override
-    public List<VendedorDto> findAll() {
+    public List<VendedorDto> findAllByActivoTrue() {
         List<Vendedor> vendedores = vendedorRepository.findAllByActivoTrue();
         return vendedores.stream().map(vendedorMapper::mapToDto).collect(Collectors.toList());
     }

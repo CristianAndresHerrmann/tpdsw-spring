@@ -7,7 +7,7 @@ import com.mycompany.tpdsw.exception.VendedorNoEncontradoException;
 
 public interface VendedorService {
 
-    List<VendedorDto> findAll();
+    List<VendedorDto> findAllByActivoTrue();
 
     VendedorDto findById(Integer id) throws VendedorNoEncontradoException;
 
