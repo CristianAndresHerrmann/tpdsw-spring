@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* Clase personalizada para tarjetas de vendedor */
+  .vendedor-card {
+    @apply bg-white rounded-lg p-6 mb-6 border border-gray-300 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl;
+  }
+
+  /* Clase personalizada para el título de las tarjetas */
+  .vendedor-title {
+    @apply text-lg font-semibold text-gray-900;
+  }
+
+  /* Clase personalizada para el texto secundario */
+  .vendedor-text {
+    @apply text-sm text-gray-500;
+  }
+
+  /* Clase para el contenedor general */
+  .vendedor-container {
+    @apply mx-auto w-2/4 p-6;
+  }
+}

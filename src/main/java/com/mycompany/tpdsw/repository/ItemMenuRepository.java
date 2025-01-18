@@ -35,8 +35,10 @@ public interface ItemMenuRepository extends JpaRepository<ItemMenu, Integer> {
 
         // Encuentra ítems por el ID del vendedor
         @Query("SELECT im FROM ItemMenu im " +
-                        "WHERE im.vendedor.id = :vendedorId AND im.vendedor.activo = true")
-        List<ItemMenu> findByVendedorId(@Param("vendedorId") Integer vendedorId);
+                        "WHERE im.vendedor.id = :vendedorId " +
+                        "AND im.vendedor.activo = true " +
+                        "AND im.activo = true")
+        List<ItemMenu> findActiveByVendedorId(@Param("vendedorId") Integer vendedorId);
 
         // Eliminacion logica de un item menu
         @Transactional
