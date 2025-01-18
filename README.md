@@ -4,3 +4,7 @@
 - npm install tailwindcss postcss autoprefixer
 - npx tailwindcss init
 - npm install tailwindcss postcss postcss-cli autoprefixer
+
+## Ejecutar al clonar
+- npm install
+- npm run watch
