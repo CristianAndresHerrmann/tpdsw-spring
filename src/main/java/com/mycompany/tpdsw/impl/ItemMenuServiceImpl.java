@@ -1,6 +1,7 @@
 package com.mycompany.tpdsw.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class ItemMenuServiceImpl implements ItemMenuService {
     @Override
     public List<ItemMenuDto> findActiveByIdVendedor(Integer id) {
         List<ItemMenu> items = itemMenuRepository.findActiveByVendedorId(id);
-        return items.stream().map(itemMenuMapper::mapToDto).toList();
+        return items.stream().map(itemMenuMapper::mapToDto).collect(Collectors.toList());
     }
 
 }

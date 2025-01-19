@@ -40,7 +40,7 @@ public class ItemMenuMapper implements Mapper<ItemMenu, ItemMenuDto> {
                         .nombre(plato.getNombre())
                         .descripcion(plato.getDescripcion())
                         .precio(plato.getPrecio())
-                        .categoria(plato.getCategoria().toString())
+                        .categoria(plato.getCategoria().getNombre())
                         .idVendedor(plato.getVendedor().getId())
                         .calorias(plato.getCalorias())
                         .aptoCeliaco(plato.getAptoCeliaco())

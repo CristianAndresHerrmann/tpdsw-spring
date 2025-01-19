@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 
 @Entity
-@Table(name = "Bebida")
+@Table(name = "bebida")
 public class Bebida extends ItemMenu {
 
     @Column(name = "graduacion_alcoholica")

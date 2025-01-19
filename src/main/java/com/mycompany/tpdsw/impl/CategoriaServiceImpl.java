@@ -1,5 +1,8 @@
 package com.mycompany.tpdsw.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,11 @@ public class CategoriaServiceImpl implements CategoriaService {
     public CategoriaDto findByNombre(String nombre) {
         Categoria categoria = categoriaRepository.findByNombre(nombre);
         return categoriaMapper.mapToDto(categoria);
+    }
+
+    @Override
+    public List<String> findNameOfAllCategoria() {
+        return categoriaRepository.findAll().stream().map(Categoria::getNombre).collect(Collectors.toList());
     }
 
 }

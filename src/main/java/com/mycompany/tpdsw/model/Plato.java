@@ -28,13 +28,13 @@ public class Plato extends ItemMenu {
     @Min(0)
     private Double calorias;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "apto_celiaco")
     private Boolean aptoCeliaco;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "apto_vegetariano")
     private Boolean aptoVegetariano;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "apto_vegano")
     private Boolean aptoVegano;
 
     @Column(nullable = false)
