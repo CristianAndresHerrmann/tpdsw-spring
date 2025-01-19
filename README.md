@@ -13,7 +13,7 @@
 - Generar output.css = npm run watch
 
 ## Estado actual de la pagina
-![Logo del proyecto](assets/animation.gif)
+![Logo del proyecto](assets/Animation.gif)
 
 ### Cosas a por hacer
 
