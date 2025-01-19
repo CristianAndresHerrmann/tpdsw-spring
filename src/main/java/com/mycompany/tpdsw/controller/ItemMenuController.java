@@ -24,8 +24,6 @@ public class ItemMenuController {
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(ItemMenuController.class);
 
     @Autowired
-    private CategoriaController categoriaController;
-    @Autowired
     private ItemMenuService itemMenuService;
 
     @GetMapping("/find/{id}")
