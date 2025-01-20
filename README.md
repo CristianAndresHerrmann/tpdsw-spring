@@ -57,7 +57,7 @@
 
 ### Compilación de TailwindCSS:
 
-1. **Generar `output.css` durante el desarrollo**:
+1. **Generar `output.css` (Tener Node.js instalado)**:
 
    ```bash
    npm run watch
@@ -72,7 +72,7 @@
 }
 ```
 
-### Ejecución del Proyecto (con Spring Boot):
+### Ejecución del Proyecto:
 
 ```bash
 mvn spring-boot:run
