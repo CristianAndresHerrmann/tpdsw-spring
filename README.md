@@ -8,6 +8,7 @@
 
 - Dar funcionalidad al buscar vendedores
 - Hacer el code del crud para vendedor y cliente y probarlo con el thunder nomas, creeria que si no lo colocamos en la web no pasa nada.
+- Hacer lo html de entidades no encontradas o que no hay en la bd (vendedores, items del vendedor)
 
 ---
 
