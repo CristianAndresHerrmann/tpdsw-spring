@@ -1,21 +1,79 @@
+## Estado Actual del Proyecto
 
-## Comandos a ejecutar para poder configurar tailwind
-- npm init -y # Inicializar el proyecto si no hay un package.json
-- npm install tailwindcss postcss autoprefixer
-- npx tailwindcss init
-- npm install tailwindcss postcss postcss-cli autoprefixer
-
-## Ejecutar proyecto
-- mvn spring-boot:run
-
-## Ejecutar al clonar
-- npm install
-- Generar output.css = npm run watch
-
-## Estado actual de la pagina
 ![Logo del proyecto](assets/Animation.gif)
 
-### Cosas a por hacer
+---
+
+### Cosas Por Hacer
 
 - Dar funcionalidad al buscar vendedores
 - Hacer el code del crud para vendedor y cliente y probarlo con el thunder nomas, creeria que si no lo colocamos en la web no pasa nada.
+
+---
+
+## Tecnologías, Frameworks y APIs
+
+- **Lenguajes:** Java, JavaScript
+- **Frameworks:** Spring Boot, Thymeleaf
+- **Bases de Datos:** MySQL
+- **Estilos y Diseño:** TailwindCSS, PostCSS
+- **Otras herramientas:** Lombok, REST APIs
+
+---
+
+## Recursos Adicionales
+
+- **Control de versiones:** Git, GitHub
+- **Gestor de dependencias:** Maven
+- **Testing y pruebas:** Postman
+
+---
+
+### Configuración de TailwindCSS:
+
+1. **Inicializar el proyecto (si no existe un `package.json`)**:
+
+   ```bash
+   npm init -y
+   ```
+
+2. **Instalar las dependencias de TailwindCSS, PostCSS y Autoprefixer**:
+
+   ```bash
+   npm install tailwindcss postcss autoprefixer
+   ```
+
+3. **Generar los archivos de configuración de Tailwind**:
+
+   ```bash
+   npx tailwindcss init
+   ```
+
+4. **Instalar PostCSS CLI**:
+
+   ```bash
+   npm install postcss-cli
+   ```
+
+### Compilación de TailwindCSS:
+
+1. **Generar `output.css` durante el desarrollo**:
+
+   ```bash
+   npm run watch
+   ```
+
+### Script `package.json` para simplificar:
+
+```json
+"scripts": {
+  "build": "npx tailwindcss -i ./src/styles.css -o ./dist/output.css",
+  "watch": "npx tailwindcss -i ./src/styles.css -o ./dist/output.css --watch"
+}
+```
+
+### Ejecución del Proyecto (con Spring Boot):
+
+```bash
+mvn spring-boot:run
+```
