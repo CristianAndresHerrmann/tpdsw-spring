@@ -20,6 +20,7 @@ import com.mycompany.tpdsw.dto.VendedorDto;
 import com.mycompany.tpdsw.exception.ClienteNoEncontradoException;
 import com.mycompany.tpdsw.exception.VendedorNoEncontradoException;
 import com.mycompany.tpdsw.service.VendedorService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/vendedores")
@@ -53,6 +54,20 @@ public class VendedorController {
         }
     }
 
+    @GetMapping("/findByNombre")
+    public String getMethodName(@RequestParam String name, Model model) {
+
+        try {
+            List<VendedorDto> vendedores = vendedorService.findByNombre(name);
+            logger.info("Vendedores recuperados {}", vendedores);
+            model.addAttribute("vendedores", vendedores);
+            model.addAttribute("nombreBuscado", name);
+            return "lista-vendedores";
+        } catch (VendedorNoEncontradoException e) {
+            return "lista-vendedores-no-encontrada";
+        }
+    }
+
     @GetMapping("/findById/{id}")
     public ResponseEntity<VendedorDto> findById(@PathVariable Integer id) throws VendedorNoEncontradoException {
         Optional<VendedorDto> vendedorDto = Optional.of(vendedorService.findById(id));
@@ -72,7 +87,7 @@ public class VendedorController {
         return ResponseEntity.ok().build();
     }
 
-       @PutMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody VendedorDto vendedorDto)
             throws ClienteNoEncontradoException, VendedorNoEncontradoException {
         Optional<VendedorDto> vendedorEncontrado = Optional.of(vendedorService.findById(id));
