@@ -17,7 +17,7 @@
         <div class="layout-center flex-grow">
             <!-- Buscador -->
             <div class="flex justify-center mb-6">
-                <form th:action="@{/vendedores/findByNombre}" method="get" class="flex space-x-2">
+                <form th:action="@{/vendedores/findByNombre}" method="get" class="form-search">
                     <input
                         type="text"
                         name="name"
@@ -33,7 +33,7 @@
             <!-- Lista de Vendedores -->
             <div id="vendedoresList" >
                 <a th:each="vendedor : ${vendedores}"
-                    class="card pl-20 pr-10 block" 
+                    class="card pl-20 pr-10 block w-[70%] mx-auto" 
                     style="cursor: pointer;"
                     th:href="@{/item-menu/{id}(id=${vendedor.id})}">
                     <h2 class="title" th:text="${vendedor.nombre}"></h2>

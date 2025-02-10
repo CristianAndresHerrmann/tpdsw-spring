@@ -41,7 +41,7 @@
 
   /* Tarjeta de producto */
   .card {
-    @apply bg-white rounded-lg p-6 mb-6 border border-gray-300 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl;
+    @apply bg-white rounded-lg p-6 mb-6 border border-gray-300 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl ;
   }
 
   /* Título en tarjeta */
@@ -61,7 +61,11 @@
 
   /* Buscador */
   .search-input {
-    @apply w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-300;
+    @apply w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-300 flex-1;
+  }
+
+  .form-search {
+    @apply flex space-x-2 w-[80%]
   }
 
   
