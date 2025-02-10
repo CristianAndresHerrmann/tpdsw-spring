@@ -68,7 +68,7 @@ public class VendedorController {
         }
     }
 
-    @GetMapping("/findById/{id}")
+    @GetMapping("/find/{id}")
     public ResponseEntity<VendedorDto> findById(@PathVariable Integer id) throws VendedorNoEncontradoException {
         Optional<VendedorDto> vendedorDto = Optional.of(vendedorService.findById(id));
         if (vendedorDto.isPresent()) {

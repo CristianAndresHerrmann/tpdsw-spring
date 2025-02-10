@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import com.mycompany.tpdsw.dto.ClienteDto;
 import com.mycompany.tpdsw.exception.ClienteNoEncontradoException;
 import com.mycompany.tpdsw.service.ClienteService;
 
 @Controller
-@RequestMapping("/clientes")
+@RequestMapping("/api/clientes")
 public class ClienteController {
 
     @Autowired
@@ -50,7 +49,7 @@ public class ClienteController {
 
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody ClienteDto clienteDto) throws URISyntaxException {
-        if (!clienteDto.getId().equals(null)) {
+        if (clienteDto.getId() != null) {
             return ResponseEntity.badRequest().build();
         }
         clienteService.save(clienteDto);
@@ -79,6 +78,5 @@ public class ClienteController {
             return ResponseEntity.notFound().build();
         }
     }
-
 
 }
