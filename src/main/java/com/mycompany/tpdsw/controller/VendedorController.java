@@ -8,10 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mycompany.tpdsw.dto.VendedorDto;
+import com.mycompany.tpdsw.exception.ClienteNoEncontradoException;
+import com.mycompany.tpdsw.exception.VendedorNoEncontradoException;
 import com.mycompany.tpdsw.service.VendedorService;
 
 @Controller
@@ -44,7 +51,47 @@ public class VendedorController {
         } else {
             return "lista-vendedores-no-encontrada";
         }
-
     }
 
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<VendedorDto> findById(@PathVariable Integer id) throws VendedorNoEncontradoException {
+        Optional<VendedorDto> vendedorDto = Optional.of(vendedorService.findById(id));
+        if (vendedorDto.isPresent()) {
+            return ResponseEntity.ok(vendedorDto.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<?> saveVendedor(@RequestBody VendedorDto vendedorDto) {
+        if (vendedorDto.getId() != null) {
+            return ResponseEntity.badRequest().build();
+        }
+        vendedorService.save(vendedorDto);
+        return ResponseEntity.ok().build();
+    }
+
+       @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody VendedorDto vendedorDto)
+            throws ClienteNoEncontradoException, VendedorNoEncontradoException {
+        Optional<VendedorDto> vendedorEncontrado = Optional.of(vendedorService.findById(id));
+        if (vendedorEncontrado.isPresent()) {
+            vendedorService.update(vendedorDto);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable Integer id) throws VendedorNoEncontradoException {
+        Optional<VendedorDto> vendedorDto = Optional.of(vendedorService.findById(id));
+        if (vendedorDto.isPresent()) {
+            vendedorService.delete(vendedorDto.get());
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
