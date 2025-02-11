@@ -1,5 +1,7 @@
 package com.mycompany.tpdsw.dto;
 
+import java.util.List;
+
 import com.mycompany.tpdsw.model.Estado;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +18,7 @@ public class PedidoDto {
     private Integer clienteId;
     private Integer id;
     private Estado estado;
-    private PagoDto formaPagoDto;
+    private Integer formaPagoDtoId;
+    private List<PedidoItemPedidoDto> pedidoItemPedidosDto;
 
 }

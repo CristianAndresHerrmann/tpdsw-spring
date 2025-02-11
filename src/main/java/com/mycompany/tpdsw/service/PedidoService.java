@@ -6,11 +6,15 @@ import com.mycompany.tpdsw.dto.PedidoDto;
 import com.mycompany.tpdsw.exception.PedidoNoEncontradoException;
 
 public interface PedidoService {
-    
+
     List<PedidoDto> findAllActive();
-    PedidoDto findByIdAndActive(Integer id) throws PedidoNoEncontradoException;
-    void save(PedidoDto pedidoDto);
-    void update(PedidoDto pedidoDto);
+
+    PedidoDto save(PedidoDto pedidoDto);
+
+    PedidoDto update(PedidoDto pedidoDto) throws PedidoNoEncontradoException;
+
     void delete(PedidoDto pedidoDto);
-    
+
+    PedidoDto findById(Integer id) throws PedidoNoEncontradoException;
+
 }

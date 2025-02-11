@@ -126,6 +126,7 @@ INSERT INTO plato (id, apto_celiaco, apto_vegano, apto_vegetariano, calorias, pe
 
 
 -- Insertar datos en la tabla 'cliente'
-INSERT INTO cliente (id, activo, coordenada_Id, fecha_eliminacion, fecha_registro, direccion, nombre, cuit, email) VALUES (1, 1, 7, NULL, CURDATE(), 'Calle Falsa 123', 'Homero Simpson', '20-12345678-9', 'homero@example.com')
+INSERT INTO cliente (id, activo, coordenada_Id, fecha_eliminacion, fecha_registro, direccion, nombre, cuit, email) VALUES (1, 1, 7, NULL, CURDATE(), 'Calle Falsa 123', 'Homero Simpson', '20-12345678-9', 'homero@example.com');
 
--- Insertar datos en la tabla 'pedido'
+-- Insertar datos en la tabla 'pago'
+INSERT INTO Pago (id, fecha, monto, tipo_pago, alias, cbu, cuit) VALUES (1, CURDATE(), 300.00, 'Transferencia', 'Alias1', '1234567890', '20-12345678-9');

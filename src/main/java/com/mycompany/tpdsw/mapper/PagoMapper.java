@@ -44,7 +44,7 @@ public class PagoMapper implements Mapper<Pago, PagoDto> {
     @Override
     public Pago mapToEntity(PagoDto dto) {
         switch (dto.getClass().getSimpleName().toLowerCase()) {
-            case "mercadopago":
+            case "mercadopagodto":
                 MercadoPagoDto mp = (MercadoPagoDto) dto;
                 return MercadoPago.builder()
                         .id(mp.getId())
@@ -52,7 +52,7 @@ public class PagoMapper implements Mapper<Pago, PagoDto> {
                         .monto(mp.getMonto())
                         .alias(mp.getAlias())
                         .build();
-            case "transferencia":
+            case "transferenciadto":
                 TransferenciaDto transferencia = (TransferenciaDto) dto;
                 return Transferencia.builder()
                         .id(transferencia.getId())

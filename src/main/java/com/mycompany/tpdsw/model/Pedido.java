@@ -49,9 +49,8 @@ public class Pedido implements Observable<Pedido> {
     @ManyToOne
     private Cliente cliente;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @Builder.Default
-    private Pago formaPago = null;
+    @OneToOne
+    private Pago formaPago;
 
     @Transient
     @Builder.Default
