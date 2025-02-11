@@ -4,6 +4,7 @@ import com.mycompany.tpdsw.service.PedidoService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,8 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     public List<PedidoDto> findAllActive() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAllActive'");
+        List<Pedido> pedidos = pedidoRepository.findAll();
+        return pedidos.stream().map(pedidoMapper::mapToDto).collect(Collectors.toList());
     }
 
     /**
@@ -64,9 +65,14 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public void delete(PedidoDto pedidoDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    public void delete(PedidoDto pedidoDto) throws PedidoNoEncontradoException {
+        Pedido pedido = pedidoMapper.mapToEntity(pedidoDto);
+        Integer id = pedido.getId();
+        if(!pedidoRepository.existsById(id)) {
+            throw new PedidoNoEncontradoException("Pedido " + id + " no encontrado");
+        }
+        pedidoRepository.delete(pedido);
+
     }
 
     @Override
