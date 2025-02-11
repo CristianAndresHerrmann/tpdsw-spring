@@ -47,11 +47,11 @@ public class VendedorController {
         List<VendedorDto> vendedores = vendedorService.findAllByActivoTrue();
         logger.info("Vendedores recuperados {}", vendedores);
         model.addAttribute("vendedores", vendedores);
-        if (Optional.of(vendedores).isPresent()) {
-            return "lista-vendedores";
-        } else {
+
+        if (vendedores.isEmpty()) {
             return "lista-vendedores-no-encontrada";
         }
+        return "lista-vendedores";
     }
 
     @GetMapping("/findByNombre")

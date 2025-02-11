@@ -68,5 +68,21 @@
     @apply flex space-x-2 w-[80%]
   }
 
+  /* Contenedor centrado para el mensaje de no datos */
+  .empty-state {
+    @apply flex flex-col items-center justify-center text-center h-full;
+  }
+
+  /* Mensaje de texto gris */
+  .empty-text {
+    @apply text-gray-500 text-lg mb-4;
+  }
+
+  /* Imagen con tamaño reducido */
+  .empty-image {
+    @apply w-24 h-auto;
+  }
+
+
   
 }

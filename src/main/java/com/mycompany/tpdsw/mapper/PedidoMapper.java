@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.mycompany.tpdsw.controller.VendedorController;
@@ -39,6 +40,7 @@ public class PedidoMapper implements Mapper<Pedido, PedidoDto> {
     private PagoService pagoService;
 
     @Autowired
+    @Lazy
     private PedidoItemPedidoMapper pedidoItemPedidoMapper;
 
     @Override

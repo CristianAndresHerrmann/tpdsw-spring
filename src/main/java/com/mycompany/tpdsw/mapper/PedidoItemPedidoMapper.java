@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mycompany.tpdsw.dto.PedidoItemPedidoDto;
+import com.mycompany.tpdsw.model.Pedido;
 import com.mycompany.tpdsw.model.relacion.PedidoItemPedido;
 
 import lombok.Builder;
@@ -13,25 +14,25 @@ import lombok.Builder;
 public class PedidoItemPedidoMapper implements Mapper<PedidoItemPedido, PedidoItemPedidoDto> {
 
     @Autowired
-    private PedidoMapper pedidoMapper;
-
-    @Autowired
     private ItemPedidoMapper itemPedidoMapper;
 
     @Override
     public PedidoItemPedidoDto mapToDto(PedidoItemPedido entity) {
         return PedidoItemPedidoDto.builder()
                 .id(entity.getId())
-                .pedidoDto(pedidoMapper.mapToDto(entity.getPedido()))
+                .pedidoDtoId(entity.getPedido().getId())
                 .itemPedidoDto(itemPedidoMapper.mapToDto(entity.getItemPedido()))
                 .build();
     }
 
     @Override
     public PedidoItemPedido mapToEntity(PedidoItemPedidoDto dto) {
+        Pedido pedidoProxy = Pedido.builder()
+                .id(dto.getPedidoDtoId())
+                .build();
         return PedidoItemPedido.builder()
                 .id(dto.getId())
-                .pedido(pedidoMapper.mapToEntity(dto.getPedidoDto()))
+                .pedido(pedidoProxy)
                 .itemPedido(itemPedidoMapper.mapToEntity(dto.getItemPedidoDto()))
                 .build();
     }
