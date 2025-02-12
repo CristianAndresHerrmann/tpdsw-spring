@@ -67,9 +67,13 @@ public class PedidoMapper implements Mapper<Pedido, PedidoDto> {
         try {
             clienteDto = clienteService.findByIdAndActive(dto.getClienteId());
             cliente = clienteMapper.mapToEntity(clienteDto);
-            pagoDto = pagoService.findById(dto.getFormaPagoDtoId());
-            logger.info("Pago del dto {}", pagoDto);
-            pago = pagoMapper.mapToEntity(pagoDto);
+            logger.info("forma de pago {}", dto.getFormaPagoDtoId());
+            if (dto.getFormaPagoDtoId() != null) {
+                pagoDto = pagoService.findById(dto.getFormaPagoDtoId());
+                logger.info("Pago del dto {}", pagoDto);
+                pago = pagoMapper.mapToEntity(pagoDto);
+            }
+
         } catch (ClienteNoEncontradoException | PagoNoEncontradoException e) {
             return null;
         }
@@ -83,6 +87,22 @@ public class PedidoMapper implements Mapper<Pedido, PedidoDto> {
                         .collect(Collectors.toList()))
                 .formaPago(pago)
                 .build();
+
+    }
+
+    public void updateEntityFromDto(PedidoDto pedidoDto, Pedido existingPedido) throws PagoNoEncontradoException {
+        if (pedidoDto.getEstado() != null) {
+            existingPedido.setEstado(pedidoDto.getEstado());
+        }
+        if (pedidoDto.getPedidoItemPedidosDto() != null) {
+            existingPedido.getPedidoItemPedidos()
+                    .addAll(pedidoDto.getPedidoItemPedidosDto().stream().map(pedidoItemPedidoMapper::mapToEntity)
+                            .collect(Collectors.toList()));
+        }
+        if (pedidoDto.getFormaPagoDtoId() != null) {
+            PagoDto pagoDto = pagoService.findById(pedidoDto.getFormaPagoDtoId());
+            existingPedido.setFormaPago(pagoMapper.mapToEntity(pagoDto));
+        }
 
     }
 

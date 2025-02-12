@@ -34,7 +34,7 @@ public class PedidoItemPedido {
     private Pedido pedido;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "item_pedido_id", referencedColumnName = "id")
+    @JoinColumn(name = "item_pedido_id", referencedColumnName = "id", nullable = false)
     private ItemPedido itemPedido;
 
 }

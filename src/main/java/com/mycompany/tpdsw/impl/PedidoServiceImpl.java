@@ -2,18 +2,26 @@ package com.mycompany.tpdsw.impl;
 
 import com.mycompany.tpdsw.service.PedidoService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mycompany.tpdsw.controller.VendedorController;
 import com.mycompany.tpdsw.dto.PedidoDto;
+import com.mycompany.tpdsw.dto.PedidoItemPedidoDto;
+import com.mycompany.tpdsw.exception.PagoNoEncontradoException;
 import com.mycompany.tpdsw.exception.PedidoNoEncontradoException;
 import com.mycompany.tpdsw.mapper.PedidoMapper;
+import com.mycompany.tpdsw.model.ItemMenu;
+import com.mycompany.tpdsw.model.ItemPedido;
 import com.mycompany.tpdsw.model.Pedido;
+import com.mycompany.tpdsw.model.relacion.PedidoItemPedido;
+import com.mycompany.tpdsw.repository.ItemMenuRepository;
 import com.mycompany.tpdsw.repository.PedidoRepository;
 
 @Service
@@ -26,6 +34,9 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Autowired
     private PedidoMapper pedidoMapper;
+
+    @Autowired
+    private ItemMenuRepository itemMenuRepository;
 
     @Override
     public List<PedidoDto> findAllActive() {
@@ -49,18 +60,52 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public PedidoDto update(PedidoDto pedidoDto) throws PedidoNoEncontradoException {
-        Pedido pedido = pedidoMapper.mapToEntity(pedidoDto);
-        logger.info("Pedido mappeado {}", pedido);
-        Integer id = pedido.getId();
+    @Transactional
+    public PedidoDto update(PedidoDto pedidoDto) throws PedidoNoEncontradoException, PagoNoEncontradoException {
+        Integer id = pedidoDto.getId();
+        // Recupera el pedido existente
+        Pedido existingPedido = pedidoRepository.findById(id)
+                .orElseThrow(() -> new PedidoNoEncontradoException("Pedido " + id + " no encontrado"));
 
-        if (!pedidoRepository.existsById(id)) {
-            throw new PedidoNoEncontradoException("Pedido " + id + " no encontrado");
+        // Actualiza los campos básicos del pedido
+        pedidoMapper.updateEntityFromDto(pedidoDto, existingPedido);
+
+        // Reconstruir la lista de asociaciones (PedidoItemPedido)
+        List<PedidoItemPedido> newPedidoItemPedidos = new ArrayList<>();
+
+        if (pedidoDto.getPedidoItemPedidosDto() != null) {
+            for (PedidoItemPedidoDto pipDto : pedidoDto.getPedidoItemPedidosDto()) {
+                // Crea la asociación
+                PedidoItemPedido pip = new PedidoItemPedido();
+                pip.setPedido(existingPedido); // Asocia el pedido
+
+                // Crea el ItemPedido asociado
+                ItemPedido itemPedido = ItemPedido.builder().build();
+                itemPedido.setCantidad(pipDto.getItemPedidoDto().getCantidad());
+
+                // Busca y asigna el ItemMenu correspondiente
+                ItemMenu itemMenu = itemMenuRepository.findById(
+                        pipDto.getItemPedidoDto().getItemMenuDtoId())
+                        .orElseThrow(() -> new RuntimeException("ItemMenu no encontrado"));
+                itemPedido.setItemMenu(itemMenu);
+
+                // Establece la relación en ambos lados:
+                pip.setItemPedido(itemPedido); // Lado propietario
+                itemPedido.setPedidoItemPedido(pip); // Lado inverso
+
+                // Agrega la asociación a la lista
+                newPedidoItemPedidos.add(pip);
+            }
         }
 
-        pedido = pedidoRepository.save(pedido);
+        // Asigna la nueva lista de asociaciones al pedido
+        existingPedido.setPedidoItemPedidos(newPedidoItemPedidos);
 
-        return pedidoMapper.mapToDto(pedido);
+        // Persiste el pedido; con CascadeType.ALL se persisten las asociaciones y el
+        // ItemPedido
+        Pedido savedPedido = pedidoRepository.save(existingPedido);
+
+        return pedidoMapper.mapToDto(savedPedido);
     }
 
     @Override

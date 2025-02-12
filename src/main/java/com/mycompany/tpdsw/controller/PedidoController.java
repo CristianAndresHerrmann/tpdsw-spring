@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mycompany.tpdsw.dto.PedidoDto;
+import com.mycompany.tpdsw.exception.PagoNoEncontradoException;
 import com.mycompany.tpdsw.exception.PedidoNoEncontradoException;
 import com.mycompany.tpdsw.service.PedidoService;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -42,9 +43,9 @@ public class PedidoController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody PedidoDto pedidoDto)
-            throws PedidoNoEncontradoException {
+            throws PedidoNoEncontradoException, PagoNoEncontradoException {
 
-        Optional<PedidoDto> pedidoDtoOpt = Optional.of(pedidoService.findById(id));
+        Optional<PedidoDto> pedidoDtoOpt = Optional.ofNullable(pedidoService.findById(id));
         if (pedidoDtoOpt.isPresent()) {
 
             pedidoService.update(pedidoDto);
