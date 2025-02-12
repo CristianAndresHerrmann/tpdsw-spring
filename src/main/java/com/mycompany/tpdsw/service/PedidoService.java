@@ -14,7 +14,7 @@ public interface PedidoService {
 
     PedidoDto update(PedidoDto pedidoDto) throws PedidoNoEncontradoException, PagoNoEncontradoException;
 
-    void delete(PedidoDto pedidoDto);
+    void delete(PedidoDto pedidoDto) throws PedidoNoEncontradoException;
 
     PedidoDto findById(Integer id) throws PedidoNoEncontradoException;
 
